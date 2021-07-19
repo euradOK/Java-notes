@@ -1,0 +1,567 @@
+String,StringBuffer and StringBuilder
+======================================
+1.Difference between String and StringBuffer:
+	*Mutability vs Immutability 
+	*== Operator vs equal() method 
+2.String object creation: Heap and String Constant Pool(scp).
+3.Importance of String Constant Pool(scp).
+4.Important FAQs on String and StringBuffer.
+	-why scp concept is available only for String object but not for StringBuffer?
+	-Why string are immutable while StringBuffer is Muttable?
+	-in addition to String objects any other objects are immutable in java?
+5.Important constructors of String class.
+6.Important Methods of String class.
+	charAt(),concat(),equal(),equalsIgnoreCase(),isEmpty()
+	length(),replace(),substring(),indexof(),lastIndexOf()
+	toLowerCase(),toUpperCase(),trim()
+7.Important Conclusion about String Immutability
+8.Creation of our own immutable class.
+9.final vs immutability.
+10.Needs of StringBuffer?
+11.StringBuffer class Constructors.
+12.Important Methods of StringBuffer class:
+	length(),capacity(),charAt(),setCharAt(),append()
+	delete(),insert(),deleteCharAt(),reverse()
+	setLength(),ensureCapacity(),trimTosize()
+13.Need of StringBuilder
+14.Difference btn StringBuffer and StringBuilder.
+15.String, StringBuffer and StringBuilder
+16.Method chaining.
+
+
+1.Difference between String and StringBuffer:
+	*Mutability vs Immutability
+	----------------------------
+
+case 01:
+String s=new String("eurad");
+s.concat("Onesphory");
+System.out.println(s);
+
+case 02:
+StringBuffer s=new StringBuffer("eurad");
+s.concat("Onesphory");
+System.out.println(s);
+
+
+	*== Operator vs equal() method.
+	-------------------------------
+== Operator always meant for reference comparison:
+This means if both  references point to the same object then it returns true.
+If point different object return False. This concept applies on both String and StringBuffer
+
+eqeal() method is present in Object class.
+Object class equal() method meant for reference/address Comparison.
+
+But in child class (String class) the equal() method is overwritten for content comparison.
+This applies only for String class but not StringBuffer class.
+StringBuffer class uses parent class method which is for reference comaparison.
+
+Example:
+case 01:
+String s1=new String("eurad");
+String s2=new String("eurad");
+System.out.println(s1==s2);			//false
+System.out.println(s1.equal(s2));	//true
+
+case 02:
+StringBuffer sb1=new StringBuffer("eurad");
+StringBuffer sb2=new StringBuffer("eurad");
+System.out.println(s1==s2);			//false
+System.out.println(sb1.equal(sb2));	//false
+
+	Heap vs string constant pool
+	----------------------------
+
+Example 01:
+Stringr s1=new String("Spring");
+s1.concat("Fall");
+String s2=s1.concat("Winter");
+s2.concat("Summer");
+System.out.println(s1);		//Spring
+System.out.println(s2);		//SpringWinterSummer
+
+Eample 02:
+String s1=new String("you cannot chage me");
+String s2=new String("you cannot change me");
+System.out.println(s1==s2);		//false
+
+String s3="you cannot change me";
+System.out.println(s1==s3);		//false
+
+String s4="you cannot change me";
+System.out.println(s3==s4);		//true
+
+String s5="you cannot" + "change me";
+System.out.println(s4==s5);		//true
+
+String s6="you cannot";
+String s7= s6 + "change me";
+System.out.println(s4==s7);		//false
+
+final String s8="you cannot";
+String s9=s8 + "change me";
+System.out.println(s4==s7);		//true 
+
+
+Importance/advantages of scp(string constant pool)
+--------------------------------------------------
+In scp area same object can be referenced by different object.Memory and performace 
+utilization will be improved.
+
+Important FAQs on String and StringBuffer.
+---------------------------------------------
+	-why scp concept is available only for String object but not for StringBuffer?
+	
+	-Why string are immutable while StringBuffer is Muttable?
+	String immutability:
+	Because of scp reusing the same object is there.By using one object if we allowed 
+	to change the content the remaining references will be affected.
+	So to prevent that immutable concept is reqired for string Object.
+
+	StringBuffer Muttable:
+	In StringBuffer scp is not there.if scp is not there reusing same object is not there.
+	Then every time separate object is required to be created.Then immutability is 
+	not required.
+
+	-in addition to String objects any other objects are immutable in java?
+	Yes, all wrapper class Objects are immutable.(Byte,Short,Integer,Long
+	Character,Double,Boolean)
+
+
+5.Important constructors of String class.
+-----------------------------------------
+-String s=new String();
+	creates an empty String Object
+-String s=new String(String literals)
+-String s=new String(StringBuffer sb)
+-String s=new String(StringBuilder sb)
+-String s=new String(char[] ch)
+Example:
+	char[] ch={'j','a','v','a'};
+	String s=new String(char[] ch);
+	System.out.println(s); //java
+
+-String s=new String(byte[] b)
+Exmaple:
+	byte[] b={97,98,100};
+	String s=new String(byte b);
+	System.out.println(b); //abcd 
+
+
+6.Important Methods of String class.
+------------------------------------
+-public char charAt(int index)
+example:
+	String s="eurad";
+	System.out.println(s.charAt(3)); //a
+	System.out.println(s.charAt(30)); //RE: String index out of range
+
+-public String concat(String s)
+	String s="eurad";
+	s=s.concat("onesphory");
+	//altenatives
+	s=s + "onesphory";
+	s+="onesphory";
+	System.out.println(s); //euradonesphory
+
+-Public boolean equals(Object o)
+	-to check equality of String Objects
+
+Example:
+	String s="EURAD";
+	System.out.println(s.equals("EURAD"));	//true
+	System.out.println(s.equals("eurad"));	//false
+
+-Public boolean equalsIgnoreCase(String s)
+	-where case is ignored.
+Example:
+	String s="EURAD";
+	System.out.println(s.equals("eurad"));	//false
+	System.out.println(s.equalsIgnoreCase("eurad"));	//false
+
+	username:equalsIgnoreCase()
+	password:equals()
+
+-public boolean isEmpty()
+	-whether to check if a given String is empty
+Example:
+	String s="";
+	System.out.println(s.isEmpty());	//true
+	
+public int length()
+	-determine number of character in given String
+Eaxmple:
+	String s="eurad";
+	System.out.println(s.length());	//5
+
+Note: 
+In java there length variable and length(). 
+length variable is used ina Arrays.(Number of element in given array)
+length() is used in String objects.
+
+example:
+	int[] x={10,20,40,50};
+	System.out.println(s.length);	//4	
+	
+-public String replace(char old,char new)
+Example:
+	String s="ababab";
+	System.out.println(s.replace('a','b'));	//bbbbbb
+
+-public String substring(int begin)
+	-Substring from begin index to end index
+Eample:
+	string s="abcdefg";
+	System.out.println(s.substring(3));	//defg
+
+-public String substring(int begin,int end)
+	-Substring from begin index to end-1 index
+Eample:
+	string s="abcdefg";
+	System.out.println(s.substring(3,5));	//def
+	
+-public int indexof(char ch)
+Example:
+	string s="eurada";
+	System.out.println(s.indexOf('d')); //4
+	System.out.println(s.indexOf(a)); //3 return only first occurance of a 
+	System.out.println(s.indexOf(z)); //-1  if occurance is not available
+
+-public int lastIndexOf(char ch)
+Example:
+	Example:
+	string s="eurada";
+	System.out.println(s.indexOf('a')); //5 Reurtn the last occurance of a
+
+-public String toLowerCase()
+	-Convert String to lowercase 
+-public String toUpperCase()
+	-Convert String toUpperCase
+-public String  trim()
+	-Remove the blanks space at begening and at the end of word.
+Example:
+import java.util*;
+class Test
+{
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in)
+		System.out.println("Enter your city name");
+		String name=sc.next.Line().toLowerCase().trim();
+		if (name.equals("ubungo"))
+		{
+			System.out.println("Hello Ubungo");
+		}
+		else if (name.equals("ilala"))
+		{
+			System.out.print("Hello ilala");
+		}
+		else if (name.equals("temeke"))
+		{
+			System.out.print("Hello temeke");
+		}
+		else 
+		{
+			System.out.print("Hello please enter name of city");
+		}
+	}
+}
+
+Note: 
+trim() method does not remove space between string.
+Example:
+String s="Eurad  Onesphory";
+System.out.println(s.length());			//16
+System.out.println(s.trim().length());	//16
+
+7.Important Conclusion about String Immutability
+--------------------------------------------------
+Example:
+String s1=new String ("eurad");
+String s2=s1.toUpperCase();
+String s3=s1.toLowerCase();
+System.out.println(s1==s2);	//false
+System.out.println(s1==s3);	//true 
+
+Example:
+String s1="eurad";
+String s2=s1.toString();
+String s3=s1.toLowerCase();
+String s4=s1.toUpperCase();
+System.out.println(s1==s2);	//true
+System.out.println(s1==s3);	//true 
+System.out.println(s1==s4);	//false
+
+8.Creation of our own immutable class.
+--------------------------------------
+final class Test
+{
+	private int i;
+	Test(int i)
+	{
+		this.i=i;
+	}
+	public Test modify(int i)
+	{
+		if (this.i==i)
+		{
+			return this;
+		}
+		else
+		{
+			return new Test(i);
+		}
+	}
+	public static void main(String args[])
+	{
+		Test t1=new Test(10);
+		Test t2=t1.modify(100);
+		Test t3=t1.modify(10);
+
+		System.out.println(t1==t2);
+		System.out.println(t1==t3);
+	}
+}
+
+9.final vs immutability.
+-------------------------
+final concept talks about variables and not about object.
+if reference varibale is declared final then you cannot reassign that reference 
+varible to new object.
+
+immutability concept talks about object and not variables.
+
+Example:
+class Test
+{
+	public static void main(String[] args)
+	{
+		final StringBuffer sb=new StringBuffer("eurad");
+		sb.append("onesphory");
+		System.out.println(sb);  //euradonesphory
+		
+		//Reassigning refernce varible to emma
+		sb=new StringBuffer("emma");		//CE: cannot Reassign b'se sb is final
+		System.out.println(sb);
+	}
+}
+
+Qn01.
+class 
+{
+	public static void main(String[] args)
+	{
+		String ta="A";
+		ta=ta.concat("B");
+		String tb="C";
+		ta.replace("C","D");
+		ta=ta.concat(tb);
+		System.out.println(ta);  //ABCC
+	}
+}
+
+Qn02.
+class 
+{
+	public static void main(String[] args)
+	{
+		String str=" ";
+		str.trim();
+		System.out.println(str.equals("") + "....."+ str.isEmpty()); // false....false
+	}
+}
+
+Qn03.
+class 
+{
+	public static void main(String[] args)
+	{
+		String s="EURAD ONESPHORY";
+		int len=s.trim().length();
+		System.out.println(len); // 15
+	}
+}
+
+Qn04.
+class 
+{
+	public static void main(String[] args)
+	{
+		String s="Hello World";
+		s.trim();
+		int i=s.indexOf("");
+		System.out.println(i); //5
+	}
+}
+
+QN05:
+class Test
+{
+	public static void main(String[] args)
+	{
+		String s1="Java";
+		String s2=new String("java");
+		//line-1
+		{
+			System.out.println("Equals");
+		}
+		else
+		{
+			System.out.println("Not Equals");
+		}
+	}
+}
+
+To print "Equals" which code fragment should be inserted at line 1
+A.String s3=s2;
+if (s1==s3)
+
+B.if (s1.equalsIgnoreCase(s2))
+
+C.String s3=s2;
+if (s1.equals(s3))
+
+D.if (s1.tolowerCase()==s2.toLowerCase())
+
+Ans: B
+
+
+10.Needs of StringBuffer?
+--------------------------
+
+11.Important Constructors of StringBuffer:
+---------------------------------------
+1.StringBuffer sb=new StringBuffer()
+-Initial capacity is 16.
+Capacity=(current capacity+1)*2
+
+Example:
+class Test
+{
+	public static void main(String[] args)
+	{
+		StringBuffer sb=new StringBuffer();
+		System.out.println(sb.capacity());	//16
+		sb.append("abcdefghijklmnop");	//16
+		System.out.println(sb.capacity());
+		sb.append("q");//34
+		System.out.println(sb.capacity());
+	}
+}
+
+2.StringBuffer sb=new StringBuffer(int initialcapacity)
+3.StringBuffer sb=new StringBuffer(String s)
+-create equivalent StringBuffer for given String.
+	capacity=s.length() +16
+
+12.Important Methods of StringBuffer class:
+-------------------------------------------
+1.public int length()
+2.public int capacity()
+3.public char charAt(int index)
+Example:
+StringBuffer sb=new StringBuffer("eurad");
+System.out.println(sb.charAt(3); //a
+System.out.println(sb.charAt(30); //StringIndexOutOfBound Exception
+
+4.public void setCharAt(int index,char newchar)
+Example:
+StringBuffer sb=new StringBuffer("eurad");
+System.out.println(sb.setcharAt(0,'A'); //Aurad
+
+5.public StringBuffer append(String s)
+-In argument you can pass String,byte,boolean,float or double. it is overloaded method.
+-Add element at last 
+Example:
+StringBuffer sb=new StringBuffer();
+sb.append("PI value is");
+sb.append(3.14);
+sb.append("its exactly true");
+sb.append(true);
+System.out.println(sb); //PI value is 3.14 its exactly true
+
+6.public StringBuffer insert(int index,String s)
+-In second argument you can pass String,byte,boolean,float or double. 
+it is overloaded method.
+-Add Element at specified position.
+Example:
+StringBuffer sb=new StringBuffer("abcdefghj");
+sb.insert(2,"xyz");
+System.out.println(sb); //abxyzcdefghj
+
+7.public StringBuffer delete(int begin,int end)
+-delete element from begin index to end-1 index.
+Example:
+StringBuffer sb=new StringBuffer("abcdefg");
+sb.insert(2,5);
+System.out.println(sb);	//abfg
+
+8.public StringBuffer deleteCharAt(int index)
+Example:
+StringBuffer sb=new StringBuffer("abcdefg");
+sb.deleteCharAt(3);
+System.out.println(sb);	//abcefg
+
+9.public StringBuffer reverse()
+Example:
+StringBuffer sb=new StringBuffer("eurad");
+sb.reverse();
+System.out.println(sb);	//darue
+
+10.public void setLength(int length)
+Example:
+StringBuffer sb=new StringBuffer("euradOnesphory");
+sb.setLength(5);
+System.out.println(sb); //eurad
+
+11.public void ensureCapacity(int capacity)
+-Increse capacity of StringBuffer based on requirement.
+Example:
+StringBuffer sb=new StringBuffer();
+System.out.println(sb.capacity()); //16
+sb.ensurecapacity(1000);
+System.out.println(sb.capacity()); //16
+
+12.public void trimTosize()
+StringBuffer sb=new StringBuffer(1000);
+sb.append("ABC");
+System.out.println(sb.capacity());//1000
+sb.trimToSize();
+System.out.println(sb.capacity()); //3
+
+
+13.Need of StringBuilder:
+-------------------------
+Difference between StringBuffer and StringBuilder:
+StringBuffer:
+------------
+1.Every method present in StringBuffer is syncronized.
+2.At a time Only one thread is allowed to operate on StringBuffer Object and Hence 
+it is a thread safe.
+3.Thread are required to wait to operate on StringBuffer Object and Hence relatively 
+Performance is slow.
+4.introduced in 1.0 Version.
+
+StringBuilder:
+-------------
+1.No method Present in StringBuilder is Synchronized.
+2.At a time multiple thread are allowed to operate on StringBuilder Object and Hence 
+it is not a thread safe.
+3.Thread are not required to wait to operate on StringBuilder Object and Hence relatively 
+Performance is high.
+
+
+Method Chaining:
+----------------
+Example:
+StringBuilder sb=new StringBuilder();
+sb.append("eurad").append("onesphory").reverse().insert(2,"xyz").delete(3,7);
+System.out.println(sb);	//yrxpsenodarue
+
+
+
+
+
+
+
