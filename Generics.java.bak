@@ -150,6 +150,9 @@ class Test<A,B>{}
 class Test<X,Y,Z>{}
 class HashMap<K,V>{}
 
+4.Generic Methods and wild card character(?):
+---------------------------------------------
+
 
 
 	ASSERTIONS

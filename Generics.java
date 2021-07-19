@@ -152,6 +152,173 @@ class HashMap<K,V>{}
 
 4.Generic Methods and wild card character(?):
 ---------------------------------------------
+1.m1(ArrayList<String> l)
+--------------------------
+-We can call this method by passing ArrayList of only String type.
+-But within a method we can add only String type of Object to the List by 
+mistake if we are trying to add any other type then we will get compile time error.
+Example:
+m1(ArrayList<String> l)
+{
+	l.add("A");	//valid
+	l.add(null);//valid
+	l.add(10);	//CE
+}
+
+
+2.m1(ArrayList<?> l)
+---------------------
+-We can call this method by passing ArrayList of any type.
+-But within a method we cant add anything to the list except null because we dont 
+know the value exactly.
+-Null is allowed because it valid value any type.
+Example:
+m1(ArrayList<?> l)
+{
+	l.add(10.5);	//CE
+	l.add(10);		//CE
+	l.add("A");		//CE
+	l.add(null);	//Valid
+}
+
+-This type of methods are best suitable for ready only operation.
+
+3.m1(ArrayList<? extends x> l)
+-------------------------------
+-x can be either class or interface.
+-If x is a class then we can call this method by passing ArrayList of x type or its
+child classes.
+-If x is an interface then we can call this method by passing ArrayList of x type or
+its implementation classes.
+-But within the method we cant add anything to the list except null because we dont 
+know the type of x exactly.
+-This type of method best suitable for read only operation.
+
+4.m1(ArrayList<? super x> l)
+----------------------------
+-x can be either class or interface.
+-If x is a class then we can call this method by passing either ArrayList of x type or its
+super classes.
+-If x is a interface then we can call this method by passing either ArrayList of x type or its
+super classes of implementation class of x.
+-But within the method we can add x type of object and null to the list.
+Example:
+m1(ArrayList<? super x> l)
+{
+	l.add(x);	//valid
+	l.add(null);//valid
+}
+
+Qns:
+ArrayList<String> l=new ArrayList<String>();//valid
+ArrayList<?> l=new ArrayList<String>();//valid
+ArrayList<?> l=new ArrayList<Integer>();//valid
+ArrayList<? extends Number> l=new ArrayList<Integer>();//valid
+ArrayList<? extends Number> l=new ArrayList<String>();//ce:incompatible type found: AL<String> required:AL<? extends Number
+ArrayList<? super String> l=new ArrayList<Object>();//valid
+ArrayList<?> l=new ArrayList<?>();//ce:incompatible type found: ? required:class or interface without bounds
+ArrayList<?> l=new ArrayList<? extends Number>();//ce:incompatible type found: extends Number required:class or interface without bounds
+
+
+
+-We can declare Type parameter either at class level or at method level.
+
+Declare Type parameter at class level.
+---------------------------------------
+class Test<T>{
+	We can use T in this class based on our requirement.
+}
+
+
+Declare Type parameter at method Level:
+---------------------------------------
+We have to declare Type parameter just before retutn type.
+class Test{
+	public <T>void m1(T ob)
+	{
+		We can use T in this class based on our requirement.
+	}
+}
+
+-We can define bounded type also at method level
+Example:
+public <T>void m1()
+public <T extends Number>void m1() //valid
+public <T extends Runnable>void m1()//valid
+public <T extends Number & Runnable>void m1()//valid
+public <T extends Comparable & Runnable>void m1()//valid
+public <T extends Number & Comparable & Runnable>void m1()//valid
+public <T extends Runnable & Number>void m1() //ce:We have take class first followed by interface
+public <T extends Number & Thread>void m1()	//ce:We cant extends more than one class.
+
+
+
+Communication with no-generic code:
+-----------------------------------
+-If we send generic object to non-generic area then it starts behaving 
+like non-generic object.
+-Similarly if we send non-generic object to generic area then it start 
+behaving like generic object. That is location in which object present 
+based on behaviour will be defined.
+
+Example:
+class Test
+{
+	public static void main(String[] args)
+	{
+		ArrayList<String> l=new ArrayList<String>();
+		l.add("eurad");
+		l.add("emma");
+		l.add(10);//ce
+		l.add("eurad");
+		m1();
+		System.out.println(l);//[eurad,emma,10.105,true]
+		
+	}
+
+	public static void m1(ArrayList l)
+	{
+		l.add(10);
+		l.add(10.5);
+		l.add(true);
+	}
+}
+
+Conclusions:
+============
+Note01:
+The main purpose of Generics is provide Type safety and resolve Type casting problems.
+Type safety and Type casting both are applicable at compile time hence Generics concepts also applicable 
+only at compile time but not run time.
+
+At time of compilation at last step generic syntax will be removed and hence for JVM Generic concept will
+not be available.
+Example:
+ArrayList l=new ArrayList<String>();
+l.add(10);
+l.add(10.5);
+l.add(true);
+System.out.println(l); //[10,10.5,true]
+
+Hence the following declaration are equal.
+ArrayList l=new ArrayList<>(String);
+ArrayList l=new ArrayList<>(Integer);
+ArrayList l=new ArrayList<>(Double);
+ArrayList l=new ArrayList();
+
+The following declaration are equal:
+ArrayList<String> l=new ArrayList<String>();
+ArrayList<String> l=new ArrayList();
+
+For these ArrayList object we can add only String type of objects.
+
+Example02:
+class Test
+{
+	public void m1(ArrayList<String> l){}
+	public void m1(ArrayList<Integer> l){}
+}
+ce: name clash: both methods have same erasure.
 
 
 
