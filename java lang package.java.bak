@@ -875,10 +875,4 @@ class DeepCloning
 	}
 }
 
-By using cloned object reference if we perform any change to the contained object then those 
-changes wont be reflected to the main object.
-
-Which cloning is the best:
-If object contains only primitive variables then shallow cloning is the best choice.
-If object contains reference variables then Deep cloning is best choice.
 

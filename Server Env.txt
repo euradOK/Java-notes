@@ -1,0 +1,19 @@
+
+Git             10.76.100.26[ubuntu 22.04]
+GitLab Runner   10.76.100.27[ubuntu 22.04]
+Registry        10.76.100.28[RockyLinux 9.2]
+k8master        10.76.100.29[RockyLinux 9.2]
+slave1          10.76.100.30[RockyLinux 9.2]
+slave2          10.76.100.31[RockyLinux 9.2]
+ldap          10.76.100.32[RockyLinux 9.2]
+
+
+
+Hello Team,
+Tumetengeneza mazingira ya Development (git) ambapo kila mmoja ataingia 
+na first.lastname na passsword ni default kwa wote na itakulazimu ubadilishe 
+password utakapoingia kwa mara ya kwanza.
+username: firstname.lastname
+Default passwod: Ardhi!2023
+
+url Link: https://41.59.87.110:2243/users/sign_in

@@ -656,8 +656,6 @@ Hello MyString@<hashcode>
 D.
 Compilation fails
 
-Qn09:
-
 class  Test
 {
 	public String toString()

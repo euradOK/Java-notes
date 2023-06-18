@@ -55,6 +55,7 @@ example:Large scale web application,enterprise application.
 -If no other Driver available then we should go for Type-1 Driver.
 
 Qn5:What are various Standard for develop JDBC application.
+------------------------------------------------------------
 	1.Load and Register Driver class.
 	2.Establish connection between Java application and Database.
 	3.Create Statement Object.
@@ -76,9 +77,88 @@ Type-1 Driver is available as a part of JDK and hence we are not required to set
 explicitly.
 
 -Every Driver Software is identified by special class which is Driver class.
-for Type-1, Driver class name is: Sun.jdbc.odbc.JdbcOdbcDriver
+for Type-1, Driver class name is: sun.jdbc.odbc.JdbcOdbcDriver
 
 -We have to Load this Driver class.
 -Any Java class we can Load by Using class.ForName() method Hence we can load Driver class also 
 by using this method.
-	class.ForName("Sun.jdbc.odbc.JdbcOdbcDriver");
+	class.ForName("sun.jdbc.odbc.JdbcOdbcDriver");
+
+Qn06.Explain types of statements available in JDBC.
+---------------------------------------------------
+Statement vs PreparedStatement vs CallableStatement 
+
+1.We can use normal statement to excute multiple queries:
+	st.excuteQuery(query1)
+	st.excuteQuery(query2)
+	st.excuteUpdate(query3)
+
+i,e If we want to work with multiple queries them we should go for Statement object.
+
+2.If we want to work with only one query, but should be excuted multiple times then we 
+should go for PreparedStatement.
+
+3.If we want to work with stored procedure and finctions then we should go for CallableStatement.
+
+Qn7.Difference between Statement and PreparedStatement.
+-------------------------------------------------------
+Statement:
+1.At the time of creating statement object, we are not required to provide any query.
+	Statement st=con.createStatement();
+Hence Statement object is not associated with any query and we can use for multiple queries.
+
+2.Whenever we are using excute method every time query will be compiled and excuted.
+3.Statement object can work only for static queries.
+	Static query:Query without position parameter.
+	Dynamic query:Query with position parameter(?)
+4.Relatively performance is low.
+5.Best choice if we want to work with multiple queries.
+6.There may be a chance of SQL injection Attack.
+7.Inserting Date Values and Large object(CLOB & BLOB) is difficult.
+
+PreparedStatement:
+------------------
+1.At the time of creating preparedstatement object, we have to provide SQL query compulsory,
+which will be send to database and will be compiled.
+	PS pst=con.preparedStatement(query);
+Hence PS always associated with only one query.
+
+2.Whenever we are using excute method, query wont be compiled just will be excuted.
+3.PrepareStatement object can work  for both static and dynamic queries.
+4.Relatively performance is high.
+5.Best choice if we want to work one query but required to excute multiple times.
+6.There is no chance of SQL injection Attack.
+7.Inserting Date Values and Large object(CLOB & BLOB) is easy
+
+Qn09:How many excute method are available:
+------------------------------------------
+1.excuteQuery();
+	ResultSet st=con.excuteQuery("select * from employee);
+2.excuteUpdate();
+	int boolean=st.excuteUpdate("insert|delete|update);
+3.excute();
+	boolen b=st.excute("select|non-select);
+	if (b==true) //select query
+	{
+		RS rs=st.getResutSet();
+	}
+	else	//non-select query
+	{
+		int updateCount=st.getUpadateCount();
+	}
+4.excuteBatch();
+	Statement st=con.createStatement();
+	st.add(query1);
+	st.add(query1);
+	st.add(query2);
+	st.add(queryn);
+
+	st.excuteBatch();
+
+Qn10.Explain BLOB and CLOB in JDBC:
+-----------------------------------
+
+
+
+
+

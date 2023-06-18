@@ -864,12 +864,12 @@ class TreesetDemo2
 	TreeSet t=new TreeSet(new myComparator)
 	{
 		t.add("eurad");
-		t.add("edmund");
-		t.add("elisha");
-		t.add("timothy");
-		t.add("mody");
-		t.add("Tairo");
-		System.out.println(t);
+t.add("edmund");
+t.add("elisha);
+t.add("timothy");
+t.add("mody");
+t.add("Tairo");
+System.out.println(t);
 	}
 }
 class myComparator implements Comparator
@@ -1171,9 +1171,6 @@ class IdentityHashMapDemo{
 -I1 and I2 are duplicate keys because I1.equals(I2) returns true.
 -If we replace HashMap with IdentityHashMap then I1 and I2 are not duplicate keys because 
 I1==I2 returns false. In this case output is {10=eurad,10=emma}
-
-WeakHashMap:
------------
 
 
 Part-13:SortedMap
